@@ -5,6 +5,7 @@ import com.onesignal.common.events.IEventNotifier
 import com.onesignal.core.internal.preferences.IPreferencesService
 import com.onesignal.core.internal.preferences.PreferenceOneSignalKeys
 import com.onesignal.core.internal.preferences.PreferenceStores
+import com.onesignal.debug.internal.logging.Logging
 import org.json.JSONArray
 
 /**
@@ -166,6 +167,13 @@ abstract class ModelStore<TModel>(
         synchronized(models) {
             for (index in 0 until jsonArray.length()) {
                 val newModel = create(jsonArray.getJSONObject(index)) ?: continue
+                // The following check is primarily intended for the operation model store
+                val hasExisting = models.any { it.id == newModel.id }
+                if (hasExisting) {
+                    Logging.debug("ModelStore<$name>: load - operation.id: ${newModel.id} already exists in the store.")
+                    continue
+                }
+
                 models.add(newModel)
                 // listen for changes to this model
                 newModel.subscribe(this)
