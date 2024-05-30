@@ -544,12 +544,12 @@ public class MainActivityViewModel implements ActivityViewModel, IPushSubscripti
                     toaster.makeCustomViewToast("Added SMS " + value, ToastType.SUCCESS);
                 }
 
-                refreshSMSRecyclerView();
+               // refreshSMSRecyclerView();
             }
 
             @Override
             public void onFailure() {
-                refreshSMSRecyclerView();
+               // refreshSMSRecyclerView();
             }
         }));
     }
@@ -648,7 +648,7 @@ public class MainActivityViewModel implements ActivityViewModel, IPushSubscripti
             String number = ((DummySubscription)value).getId();
             OneSignal.getUser().removeSms(number);
             smsArrayList.remove(value);
-            refreshSMSRecyclerView();
+            //refreshSMSRecyclerView();
             toaster.makeCustomViewToast("Deleted SMS " + number, ToastType.SUCCESS);
         });
         smssRecyclerView.setAdapter(smssRecyclerViewAdapter);

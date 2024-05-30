@@ -9,9 +9,9 @@ import com.onesignal.core.internal.device.IDeviceService
 internal class DeviceService(private val _applicationService: IApplicationService) :
     IDeviceService {
     companion object {
-        private const val HMS_CORE_SERVICES_PACKAGE = "com.huawei.hwid" // = HuaweiApiAvailability.SERVICES_PACKAGE
+       // private const val HMS_CORE_SERVICES_PACKAGE = "com.huawei.hwid" // = HuaweiApiAvailability.SERVICES_PACKAGE
         private const val GOOGLE_PLAY_SERVICES_PACKAGE = "com.google.android.gms" // = GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE
-        private const val HMS_AVAILABLE_SUCCESSFUL = 0
+       // private const val HMS_AVAILABLE_SUCCESSFUL = 0
     }
 
     override val isAndroidDeviceType: Boolean
@@ -20,8 +20,8 @@ internal class DeviceService(private val _applicationService: IApplicationServic
     override val isFireOSDeviceType: Boolean
         get() = deviceType == IDeviceService.DeviceType.Fire
 
-    override val isHuaweiDeviceType: Boolean
-        get() = deviceType == IDeviceService.DeviceType.Huawei
+  // override val isHuaweiDeviceType: Boolean
+  //     get() = deviceType == IDeviceService.DeviceType.Huawei
 
     /**
      * Device type is determined by the push channel(s) the device supports.
@@ -41,13 +41,13 @@ internal class DeviceService(private val _applicationService: IApplicationServic
             if (supportsGooglePush()) return IDeviceService.DeviceType.Android
 
             // Some Huawei devices have both FCM & HMS support, but prefer FCM (Google push) over HMS
-            if (supportsHMS) return IDeviceService.DeviceType.Huawei
+           // if (supportsHMS) return IDeviceService.DeviceType.Huawei
 
             // Start - Fallback logic
             //    Libraries in the app (Google:FCM, HMS:PushKit) + Device may not have a valid combo
             // Example: App with only the FCM library in it and a Huawei device with only HMS Core
             if (isGMSInstalledAndEnabled) return IDeviceService.DeviceType.Android
-            return if (isHMSCoreInstalledAndEnabledFallback()) IDeviceService.DeviceType.Huawei else IDeviceService.DeviceType.Android
+            return  IDeviceService.DeviceType.Android
 
             // Last fallback
             // Fallback to device_type 1 (Android) if there are no supported push channels on the device
@@ -88,9 +88,9 @@ internal class DeviceService(private val _applicationService: IApplicationServic
 
     // HuaweiApiAvailability is the recommend way to detect if "HMS Core" is available but this fallback
     //   works even if the app developer doesn't include any HMS libraries in their app.
-    private fun isHMSCoreInstalledAndEnabledFallback(): Boolean {
-        return packageInstalledAndEnabled(HMS_CORE_SERVICES_PACKAGE)
-    }
+  // private fun isHMSCoreInstalledAndEnabledFallback(): Boolean {
+  //     return packageInstalledAndEnabled(HMS_CORE_SERVICES_PACKAGE)
+  // }
 
     // TODO: Maybe able to switch to GoogleApiAvailability.isGooglePlayServicesAvailable to simplify
     // However before doing so we need to test with an old version of the "Google Play services"
@@ -121,67 +121,67 @@ internal class DeviceService(private val _applicationService: IApplicationServic
             }
         }
 
-    private val supportsHMS: Boolean
-        get() {
-            // 1. App should have the HMSAvailability for best detection and must have PushKit libraries
-            return if (!hasHMSAvailabilityLibrary() || !hasAllHMSLibrariesForPushKit) false else isHMSCoreInstalledAndEnabled()
+   //private val supportsHMS: Boolean
+   //    get() {
+   //        // 1. App should have the HMSAvailability for best detection and must have PushKit libraries
+   //        return if (!hasHMSAvailabilityLibrary() || !hasAllHMSLibrariesForPushKit) false else isHMSCoreInstalledAndEnabled()
 
-            // 2. Device must have HMS Core installed and enabled
-        }
+   //        // 2. Device must have HMS Core installed and enabled
+   //    }
 
-    private fun isHMSCoreInstalledAndEnabled(): Boolean {
-        // we use reflection so we don't depend on the library directly.
-        return try {
-            val clazz = Class.forName("com.huawei.hms.api.HuaweiApiAvailability")
-            val newInstanceMethod = clazz.getMethod("getInstance")
-            val isHuaweiMobileServicesAvailableMethod =
-                clazz.getMethod(
-                    "isHuaweiMobileServicesAvailable",
-                    android.content.Context::class.java,
-                )
-            val availabilityInstance = newInstanceMethod.invoke(null)
+   //private fun isHMSCoreInstalledAndEnabled(): Boolean {
+   //    // we use reflection so we don't depend on the library directly.
+   //    return try {
+   //        val clazz = Class.forName("com.huawei.hms.api.HuaweiApiAvailability")
+   //        val newInstanceMethod = clazz.getMethod("getInstance")
+   //        val isHuaweiMobileServicesAvailableMethod =
+   //            clazz.getMethod(
+   //                "isHuaweiMobileServicesAvailable",
+   //                android.content.Context::class.java,
+   //            )
+   //        val availabilityInstance = newInstanceMethod.invoke(null)
 
-            val result = isHuaweiMobileServicesAvailableMethod.invoke(availabilityInstance, _applicationService.appContext) as Int
+   //        val result = isHuaweiMobileServicesAvailableMethod.invoke(availabilityInstance, _applicationService.appContext) as Int
 
-            return result == HMS_AVAILABLE_SUCCESSFUL
-        } catch (e: ClassNotFoundException) {
-            false
-        }
-    }
+   //        return result == HMS_AVAILABLE_SUCCESSFUL
+   //    } catch (e: ClassNotFoundException) {
+   //        false
+   //    }
+   //}
 
-    override val hasAllHMSLibrariesForPushKit: Boolean
-        get() {
-            // NOTE: hasHMSAvailabilityLibrary technically is not required,
-            //   just used as recommend way to detect if "HMS Core" app exists and is enabled
-            return hasHMSAGConnectLibrary() && hasHMSPushKitLibrary()
-        }
+  //  override val hasAllHMSLibrariesForPushKit: Boolean
+  //      get() {
+  //          // NOTE: hasHMSAvailabilityLibrary technically is not required,
+  //          //   just used as recommend way to detect if "HMS Core" app exists and is enabled
+  //          return hasHMSAGConnectLibrary() && hasHMSPushKitLibrary()
+  //      }
+//
+  //  private fun hasHMSAGConnectLibrary(): Boolean {
+  //      return try {
+  //          Class.forName("com.huawei.agconnect.config.AGConnectServicesConfig")
+  //          true
+  //      } catch (e: ClassNotFoundException) {
+  //          false
+  //      }
+  //  }
 
-    private fun hasHMSAGConnectLibrary(): Boolean {
-        return try {
-            Class.forName("com.huawei.agconnect.config.AGConnectServicesConfig")
-            true
-        } catch (e: ClassNotFoundException) {
-            false
-        }
-    }
-
-    private fun hasHMSPushKitLibrary(): Boolean {
-        return try {
-            Class.forName("com.huawei.hms.aaid.HmsInstanceId")
-            true
-        } catch (e: ClassNotFoundException) {
-            false
-        }
-    }
-
-    private fun hasHMSAvailabilityLibrary(): Boolean {
-        return try {
-            Class.forName("com.huawei.hms.api.HuaweiApiAvailability")
-            true
-        } catch (e: ClassNotFoundException) {
-            false
-        }
-    }
+  //  private fun hasHMSPushKitLibrary(): Boolean {
+  //      return try {
+  //          Class.forName("com.huawei.hms.aaid.HmsInstanceId")
+  //          true
+  //      } catch (e: ClassNotFoundException) {
+  //          false
+  //      }
+  //  }
+//
+  //  private fun hasHMSAvailabilityLibrary(): Boolean {
+  //      return try {
+  //          Class.forName("com.huawei.hms.api.HuaweiApiAvailability")
+  //          true
+  //      } catch (e: ClassNotFoundException) {
+  //          false
+  //      }
+  //  }
 
     private fun supportsADM(): Boolean {
         return try {

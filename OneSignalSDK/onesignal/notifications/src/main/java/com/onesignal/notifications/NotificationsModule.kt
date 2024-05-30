@@ -57,7 +57,7 @@ import com.onesignal.notifications.internal.registration.impl.GooglePlayServices
 import com.onesignal.notifications.internal.registration.impl.IPushRegistratorCallback
 import com.onesignal.notifications.internal.registration.impl.PushRegistratorADM
 import com.onesignal.notifications.internal.registration.impl.PushRegistratorFCM
-import com.onesignal.notifications.internal.registration.impl.PushRegistratorHMS
+//import com.onesignal.notifications.internal.registration.impl.PushRegistratorHMS
 import com.onesignal.notifications.internal.registration.impl.PushRegistratorNone
 import com.onesignal.notifications.internal.restoration.INotificationRestoreProcessor
 import com.onesignal.notifications.internal.restoration.INotificationRestoreWorkManager
@@ -127,7 +127,7 @@ internal class NotificationsModule : IModule {
                         PushRegistratorNone()
                     }
                 } else {
-                    PushRegistratorHMS(deviceService, it.getService(IApplicationService::class.java))
+                    //PushRegistratorHMS(deviceService, it.getService(IApplicationService::class.java))
                 }
             return@register service
         }.provides<IPushRegistrator>()

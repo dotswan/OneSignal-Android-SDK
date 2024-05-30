@@ -14,7 +14,7 @@ enum class SubscriptionObjectType(val value: String) {
     FIREFOX_PUSH("FirefoxPush"),
     MACOS_PUSH("macOSPush"),
     EMAIL("Email"),
-    HUAWEI_PUSH("HuaweiPush"),
+   // HUAWEI_PUSH("HuaweiPush"),
     SMS("SMS"),
     ;
 
@@ -23,7 +23,8 @@ enum class SubscriptionObjectType(val value: String) {
             return when (type) {
                 IDeviceService.DeviceType.Android -> ANDROID_PUSH
                 IDeviceService.DeviceType.Fire -> FIREOS_PUSH
-                IDeviceService.DeviceType.Huawei -> HUAWEI_PUSH
+                //IDeviceService.DeviceType.Huawei -> HUAWEI_PUSH
+
             }
         }
 

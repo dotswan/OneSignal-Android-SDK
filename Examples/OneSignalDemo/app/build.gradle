@@ -31,13 +31,33 @@ android {
             dimension "default"
             applicationId "com.onesignal.sdktest"
         }
-        huawei {
-            dimension "default"
-            minSdkVersion 21
-            applicationId "com.onesignal.sdktest"
-        }
+      // huawei {
+      //     dimension "default"
+      //     minSdkVersion 21
+      //     applicationId "com.onesignal.sdktest"
+      // }
     }
-
+    packagingOptions {
+        resources.excludes.add("**/attach_hotspot_windows.dll")
+        resources.excludes.add("META-INF/licenses/**")
+        resources.excludes.add("META-INF/AL2.0")
+        resources.excludes.add("META-INF/LGPL2.1")
+        resources.excludes.add("META-INF/DEPENDENCIES")
+        resources.excludes.add("META-INF/LICENSE")
+        resources.excludes.add("META-INF/LICENSE.txt")
+        resources.excludes.add("META-INF/license.txt")
+        resources.excludes.add("META-INF/NOTICE")
+        resources.excludes.add("META-INF/NOTICE.txt")
+        resources.excludes.add("META-INF/notice.txt")
+        resources.excludes.add("META-INF/ASL2.0")
+        resources.excludes.add("META-INF/*.kotlin_module")
+        resources.excludes.add('META-INF/AL2.0')
+        resources.excludes.add('META-INF/LGPL2.1')
+        resources.pickFirsts.add('lib/armeabi-v7a/libassmidi.so')
+        resources.pickFirsts.add('lib/x86/libassmidi.so')
+        resources.excludes.add("META-INF/*")
+        resources.excludes.add('win32-x86-64/attach_hotspot_windows.dll')
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -64,9 +84,10 @@ android {
         if (getGradle().getStartParameter().getTaskRequests().toString().contains("Gms")) {
             apply plugin: 'com.google.gms.google-services'
             googleServices { disableVersionCheck = true }
-        } else {
-            apply plugin: 'com.huawei.agconnect'
         }
+       //} else {
+       //    apply plugin: 'com.huawei.agconnect'
+       //}
     }
 }
 
@@ -89,15 +110,15 @@ dependencies {
 
     /** START - Huawei Builds **/
     // Omit Google / Firebase libraries for Huawei builds.
-    huaweiImplementation('com.onesignal:OneSignal:5.1.13') {
-        exclude group: 'com.google.android.gms', module: 'play-services-gcm'
-        exclude group: 'com.google.android.gms', module: 'play-services-analytics'
-        exclude group: 'com.google.android.gms', module: 'play-services-location'
-        exclude group: 'com.google.firebase', module: 'firebase-messaging'
-    }
+  // huaweiImplementation('com.onesignal:OneSignal:5.1.13') {
+  //     exclude group: 'com.google.android.gms', module: 'play-services-gcm'
+  //     exclude group: 'com.google.android.gms', module: 'play-services-analytics'
+  //     exclude group: 'com.google.android.gms', module: 'play-services-location'
+  //     exclude group: 'com.google.firebase', module: 'firebase-messaging'
+  // }
     // Add HMS Push library
-    huaweiImplementation 'com.huawei.hms:push:6.3.0.304'
-    // Optionally add HMS location
-    huaweiImplementation 'com.huawei.hms:location:4.0.0.300'
-    /** END - Huawei Builds **/
+   //huaweiImplementation 'com.huawei.hms:push:6.3.0.304'
+   //// Optionally add HMS location
+   //huaweiImplementation 'com.huawei.hms:location:4.0.0.300'
+   ///** END - Huawei Builds **/
 }

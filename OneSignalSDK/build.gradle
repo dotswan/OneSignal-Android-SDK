@@ -10,9 +10,9 @@ buildscript {
         ]
         androidGradlePluginVersion = '7.2.0'
         googleServicesGradlePluginVersion = '4.3.10'
-        huaweiAgconnectVersion = '1.6.2.300'
-        huaweiHMSPushVersion = '6.3.0.304'
-        huaweiHMSLocationVersion = '4.0.0.300'
+        //huaweiAgconnectVersion = '1.6.2.300'
+        //huaweiHMSPushVersion = '6.3.0.304'
+        //huaweiHMSLocationVersion = '4.0.0.300'
         kotlinVersion = '1.7.10'
         kotestVersion = '5.8.0'
         ktlintPluginVersion = '11.6.1'
@@ -26,12 +26,12 @@ buildscript {
         mavenCentral()
         gradlePluginPortal()
         // Huawei maven
-        maven { url 'https://developer.huawei.com/repo/' }
+        //maven { url 'https://developer.huawei.com/repo/' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$androidGradlePluginVersion"
         classpath "com.google.gms:google-services:$googleServicesGradlePluginVersion"
-        classpath "com.huawei.agconnect:agcp:$huaweiAgconnectVersion"
+        //classpath "com.huawei.agconnect:agcp:$huaweiAgconnectVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlintPluginVersion"
     }
@@ -45,6 +45,6 @@ allprojects {
             dirs 'libs'
         }
         // Huawei maven
-        maven { url 'https://developer.huawei.com/repo/' }
+        // maven { url 'https://developer.huawei.com/repo/' }
     }
 }

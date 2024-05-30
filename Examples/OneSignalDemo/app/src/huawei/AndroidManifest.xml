@@ -7,13 +7,13 @@
     <application
         android:name=".application.MainApplication">
 
-        <service
+      <!--  <service
           android:name="com.onesignal.sdktest.notification.HmsMessageServiceAppLevel"
           android:exported="false">
           <intent-filter>
             <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
           </intent-filter>
-        </service>
+        </service>-->
 
     </application>
 

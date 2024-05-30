@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationListener
-import com.huawei.hms.location.LocationCallback
+//import com.huawei.hms.location.LocationCallback
 import com.onesignal.common.AndroidUtils
 
 internal object LocationUtils {
@@ -16,13 +16,13 @@ internal object LocationUtils {
         }
     }
 
-    fun hasHMSLocationLibrary(): Boolean {
-        return try {
-            AndroidUtils.opaqueHasClass(LocationCallback::class.java)
-        } catch (e: NoClassDefFoundError) {
-            false
-        }
-    }
+   // fun hasHMSLocationLibrary(): Boolean {
+   //     return try {
+   //         AndroidUtils.opaqueHasClass(LocationCallback::class.java)
+   //     } catch (e: NoClassDefFoundError) {
+   //         false
+   //     }
+   // }
 
     fun hasLocationPermission(context: Context): Boolean {
         return (

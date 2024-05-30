@@ -14,7 +14,7 @@ import com.onesignal.location.internal.common.LocationUtils
 import com.onesignal.location.internal.controller.ILocationController
 import com.onesignal.location.internal.controller.impl.FusedLocationApiWrapperImpl
 import com.onesignal.location.internal.controller.impl.GmsLocationController
-import com.onesignal.location.internal.controller.impl.HmsLocationController
+//import com.onesignal.location.internal.controller.impl.HmsLocationController
 import com.onesignal.location.internal.controller.impl.IFusedLocationApiWrapper
 import com.onesignal.location.internal.controller.impl.NullLocationController
 import com.onesignal.location.internal.permissions.LocationPermissionController
@@ -36,8 +36,8 @@ internal class LocationModule : IModule {
                         it.getService(IApplicationService::class.java),
                         it.getService(IFusedLocationApiWrapper::class.java),
                     )
-                } else if (deviceService.isHuaweiDeviceType && LocationUtils.hasHMSLocationLibrary()) {
-                    HmsLocationController(it.getService(IApplicationService::class.java))
+                //} else if (deviceService.isHuaweiDeviceType && LocationUtils.hasHMSLocationLibrary()) {
+                   // HmsLocationController(it.getService(IApplicationService::class.java))
                 } else {
                     NullLocationController()
                 }
